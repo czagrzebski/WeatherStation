@@ -2,3 +2,5 @@
 .vscode/arduino.json
 .vscode/c_cpp_properties.json
 .vscode/launch.json
+NRFTest/NRFTransmitter/nRF24L01.h
+NRFTest/NRFTransmitter/RF24.h
