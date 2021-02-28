@@ -16,9 +16,8 @@ void setup() {
 }
 void loop() {
   if (radio.available()) {
-    char text[32] = "";
-    radio.read(&text, sizeof(text));
-    Serial.println(text);
+    uint8_t data[3]; //Byte array of Sensor Data (Temperature, Humidity, Pressure)
+    radio.read(&data, sizeof(data));
+    Serial.println(data[2]);
   }
 }
-*
