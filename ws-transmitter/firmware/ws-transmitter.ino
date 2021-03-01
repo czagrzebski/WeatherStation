@@ -7,15 +7,19 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(7, 8); // CE (Pin 7), CSN (Pin 8)
+
+const byte address[6] = "00004";
+uint8_t station_id = 1;
 boolean debug = false; //Debug Mode Flag
-const byte address[6] = "00001";
 
-byte temp = 1;
-byte humidity = 10;
-byte pressure = 12;
+RF24 radio(7, 8); // CE (Pin 7), CSN (Pin 8)
 
-uint8_t data[3];
+int temp;
+int humidity;
+int pressure;
+
+//Station ID, Temperature, Humidity, Pressure
+uint8_t data[4]; 
 
 void setup() {
   Serial.begin(9600); //9600 baudrate for serial connection
@@ -26,21 +30,22 @@ void setup() {
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_LOW);
   radio.stopListening(); //Send Only (Do not recieve)
-
-  //Test Values
-  data[0] = temp;
-  data[1] = humidity;
-  data[2] = pressure;
-
 }
 
 void loop() {
-  //TODO: Fetch sensor data from Temperature Sensor
 
-  const char text[] = "Hello World";
-  Serial.println("Sending Request");
-  
+  //Test Values
+  temp = 1;
+  humidity = 10;
+  pressure = 12;
+
+  data[0] = station_id;
+  data[1] = temp;
+  data[2] = humidity;
+  data[3] = pressure;
+
   //Write the data to be sent to the NRF24l01
+  Serial.println("Transmitting...");
   radio.write(&data, sizeof(data));
-  delay(1000);
+  delay(2000);
 }
